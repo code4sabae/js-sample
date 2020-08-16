@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8" /><head>
+    <title>websocket test</title>
+    <script type="module">
+      window.onload = () => {
+        let conn = null;
+        const log = (msg) => {
+          div_log.innerHTML += msg + "<br>";
+          div_log.scroll(0, div_log.scrollTop + 1000);
+        };
+        const connect = () => {
+          disconnect();
+          const wsUri =
+            (window.location.protocol === "https:" ? "wss://" : "ws://") +
+            window.location.host +
+            "/ws/";
+          conn = new WebSocket(wsUri);
+          log("Connecting...");
+          conn.onopen = function () {
+            log("Connected.");
+            update_ui();
+          };
+          conn.onmessage = function (e) {
+            log("Received: " + e.data);
+            const mes = JSON.parse(e.data);
+            console.log(mes);
+            if (mes.type === "init") {
+              members.innerHTML = "";
+              const optall = document.createElement("option");
+              optall.id = optall.textContent = "all";
+              members.appendChild(optall);
+              for (const m of mes.members) {
+                const opt = document.createElement("option");
+                opt.id = opt.textContent = m.id;
+                members.appendChild(opt);
+              }
+            } else if (mes.type === "open") {
+              const opt = document.createElement("option");
+              opt.id = opt.textContent = mes.from;
+              members.appendChild(opt);
+            } else if (mes.type === "close") {
+              members.removeChild(document.getElementById(mes.from));
+            } else {
+              console.log(mes);
+            }
+          };
+          conn.onclose = function () {
+            log("Disconnected.");
+            conn = null;
+            update_ui();
+          };
+        };
+        const disconnect = () => {
+          if (conn) {
+            log("Disconnecting...");
+            conn.close();
+            conn = null;
+            update_ui();
+          }
+        };
+        const update_ui = () => {
+          if (!conn) {
+            span_status.textContent = "disconnected";
+            btn_connect.textContent = "Connect";
+          } else {
+            span_status.textContent = `connected (protocol: ${conn.protocol})`;
+            btn_connect.textContent = "Disconnect";
+          }
+        };
+        btn_connect.onclick = () => {
+          if (!conn) {
+            connect();
+          } else {
+            disconnect();
+          }
+          update_ui();
+        };
+        input_form.onsubmit = (e) => {
+          e.preventDefault();
+          if (!conn) {
+            return;
+          }
+          const data = { text: input_text.value };
+          if (members.value !== "all") {
+            data.dm = members.value;
+            log("DM: " + data.text);
+          } else {
+            log("Sending: " + data.text);
+          }
+          conn.send(JSON.stringify(data));
+          input_text.value = "";
+          input_text.focus();
+        };
+      };
+    </script>
+  </head>
+  <body style="font-family: sans-serif">
+    <h1>websocket test</h1>
+    <div>
+      <button id="btn_connect">Connect</button>
+      Status: <span id="span_status">disconnected</span>
+    </div>
+    <div
+      id="div_log"
+      style="
+        width: 80vw;
+        margin: 1vw 0 1vw 0;
+        padding: .5em;
+        height: 70vh;
+        overflow: auto;
+        border: 1px solid black;
+      "
+    ></div>
+    To <select id="members"><option>all</option></select><br>
+    <form id="input_form"><input id="input_text" type="text"> <input type="submit" value="Send"></form><br>
+  </body>
+</html>

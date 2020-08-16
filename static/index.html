@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html><body>
+<h1>code4saboe-js - thin web framework</h1>
+
+<button id="btn">fetchJSON</button><br>
+<br>
+<textarea id="ta" style="width:60vw; height:8em;"></textarea><br>
+
+<script type="module">
+import { fetchJSON } from "https://code4sabae.github.io/js/fetchJSON.js";
+//import { fetchJSON } from "http://127.0.0.1:8080/fetchJSON.js";
+
+btn.onclick = async () => {
+  const req = { a: 123, b: "abc" };
+  const url = "http://localhost:8881/api/test/v1";
+  //const url = "/api/test/v1";
+  const res = await fetchJSON(url, req);
+  console.log(res);
+  ta.value = JSON.stringify(res);
+};
+</script>
+  
+<a href="./test-upload.html">ファイルアップロードテスト</a><br>
+</body>
+</html>
