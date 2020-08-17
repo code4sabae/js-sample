@@ -1,5 +1,3 @@
-const p = (s) => {
-  console.log(s);
-}
+const p = console.log;
 
 export { p };
