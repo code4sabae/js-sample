@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html><body>
+<h1>proxy test</h1>
+
+<select id="sel"></select><br>
+
+<script type="module">
+
+import { proxySelect } from "./proxySelect.js";
+import { sleep } from "./sleep.js";
+
+window.onload = async () => {
+  const ar = [1, 2, 3];
+
+  const par = proxySelect(sel, ar);
+  par.push(4);
+  par.unshift(0);
+  console.log(par);
+  par.pop();
+  par.pop();
+  par.pop();
+  for (let i = 0; i < 10; i++) {
+    par.push(rnd(100));
+  }
+  par.sort();
+  // par.length = 0; // selectの要素全部消える
+  const o = { text: "ABC", value: 1234, toString() { return this.text } }
+  par[0] = o;
+  o.text = "DEF"; // 反映されない
+
+  sel.onchange = () => {
+    const idx = sel.selectedIndex;
+    console.log(idx, sel.value, par[idx]);
+  };
+};
+
+</script>
+
+<a href="./index.html">top</a><br>
+</body>
+</html>
