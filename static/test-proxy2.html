@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html><body>
+<h1>proxy test</h1>
+
+<select id="sel"></select><br>
+
+<script type="module">
+
+import { proxySelect } from "./proxySelect.js";
+import { sleep } from "./sleep.js";
+
+window.onload = async () => {
+  const ar = [ "アルデュイーノ", "アイティーパスポート", "アルバム", "アイスクリーム", "アイス", "アカイバケツ", "アースツキコンセント",  ];
+  const par = proxySelect(sel, ar);
+  
+  await sleep(3000);
+  par.sort();
+
+  sel.onchange = () => {
+    const idx = sel.selectedIndex;
+    console.log(idx, sel.value, par[idx]);
+  };
+};
+
+</script>
+
+</body>
+</html>
