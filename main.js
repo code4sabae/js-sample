@@ -1,5 +1,5 @@
-import { Server } from "https://code4sabae.github.io/js/Server.js";
-// import { Server } from "http://127.0.0.1:8080/Server.js";
+// import { Server } from "https://code4sabae.github.io/js/Server.js";
+import { Server } from "http://127.0.0.1:8080/Server.js";
 
 class MyServer extends Server {
   api(path, req) {

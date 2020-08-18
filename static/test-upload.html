@@ -2,7 +2,7 @@
 <html><body>
 <h1>image uploader test</h1>
 
-<input id="file1" type="file" name="file1" multiple>
+<input id="file1" type="file" name="file1" accept="image/*" multiple>
 <div id="imgc"></div>
 <br>
 
@@ -14,17 +14,13 @@ import { ImageUploader } from "https://code4sabae.github.io/js/ImageUploader.js"
 // import { ImageUploader } from "http://127.0.0.1:8080/ImageUploader.js";
 
 const maxwidth = 1200;
-const maxsize = 1 * 1024 * 1024;
+const maxsize = "1MB";
 
 const uploadurl = "http://127.0.0.1:8881/data/"
 //const uploadurl = "/data/"
 
 file1.onchange = async e => {
   for (const file of e.target.files) {
-    const type = file.type;
-    if (!type.startsWith("image/")) {
-      continue;
-    }
     const imgup = new ImageUploader(uploadurl);
     imgup.setFile(file, maxwidth, maxsize);
     imgc.appendChild(imgup);

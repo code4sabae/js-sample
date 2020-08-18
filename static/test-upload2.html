@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html><body>
+<h1>image uploader test</h1>
+
+<script type="module">
+import { InputFile } from "https://code4sabae.github.io/js/InputFile.js";
+// import { InputFile } from "http://127.0.0.1:8080/InputFile.js";
+</script>
+
+<form id="form1">
+  <input type="text" name="tf1"><br>
+  <select name="sel1"><option>a</option><option>b</option><select><br>
+    <input-file id="file1" name="file1" accept="image/*" uploadurl="http://127.0.0.1:8881/data/" maxsize="1MB" maxwidth=1200></input-file><br>
+    <input-file name="file2" accept="video/*" uploadurl="http://127.0.0.1:8881/data/" maxsize="30MB"></input-file><br>
+    <textarea id="ta" style="width: 80vw; height: 10em"></textarea><br>
+  <input type="submit" value="send"><br>
+</form>
+
+<script type="module">
+  form1.onsubmit = (e) => {
+    e.preventDefault();
+    console.log(e.target);
+    console.log(file1.value);
+  };
+  </script>
+  
+<a href="./index.html">top</a><br>
+</body>
+</html>
