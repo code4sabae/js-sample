@@ -1,5 +1,7 @@
 #!/bin/sh
 
+cd /root
+
 curl -fsSL https://deno.land/x/install/install.sh | sh
 cat >> .bash_profile << EOF
 export DENO_INSTALL=/root/.deno
