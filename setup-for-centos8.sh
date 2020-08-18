@@ -5,7 +5,9 @@ cat >> .bash_profile << EOF
 export DENO_INSTALL=/root/.deno
 export PATH=/root/.deno/bin:$PATH
 EOF
-source .bash_profile
+
+export DENO_INSTALL=/root/.deno
+export PATH=/root/.deno/bin:$PATH
 
 mkdir test
 cd test
