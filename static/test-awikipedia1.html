@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><body>
+<h1>a-wikipedia test</h1>
+
+<script type="module">
+class AWikipedia extends HTMLElement {
+  constructor() {
+    super();
+    const word = this.textContent;
+    while (this.firstChild) {
+      this.removeChild(this.firstChild);
+    }
+    const a = document.createElement("a");
+    a.href = "https://ja.wikipedia.org/wiki/" + encodeURIComponent(word);
+    this.appendChild(a);
+    a.textContent = word;
+  }
+}
+customElements.define("a-wikipedia", AWikipedia);
+
+</script>
+
+<h2>How to use</h2>
+&lt;a-wikipedia&gt;モールス信号&lt;/a-wikipedia&gt;
+<br>
+
+<h2>Sample</h2>
+<a-wikipedia>モールス信号</a-wikipedia>
+
+</body>
+</html>

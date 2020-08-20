@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html><body>
+<h1>image uploader</h1>
+
+<script type="module" src="https://code4sabae.github.io/js/InputFile.js"></script>
+<input-file id="file1" name="file1" accept="image/*" uploadurl="http://127.0.0.1:8881/data/" maxsize="1MB" maxwidth=1220 multiple></input-file><br>
+
+<textarea id="ta" style="width: 80vw; height: 10em"></textarea><br>
+
+<script type="module">
+
+file1.onupload = async (e) => {
+  ta.value = file1.value;
+};
+</script>
+  
+</body>
+</html>
