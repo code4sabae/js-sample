@@ -1,0 +1,10 @@
+<!DOCTYPE html><html><script type="module">
+//import { ClientSync } from "http://127.0.0.1:8080/ClientSync.js";
+import { ClientSync } from "https://code4sabae.github.io/js/ClientSync.js";
+
+window.onload = async () => {
+  const ws = await new ClientSync().connect("/ws/");
+  ws.send({ ab: 3 });
+  console.log(await ws.get());
+};
+</script></html>

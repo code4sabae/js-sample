@@ -1,0 +1,31 @@
+<!DOCTYPE html><html><script type="module">
+//import { ClientSync } from "http://127.0.0.1:8080/ClientSync.js";
+import { ClientSync } from "https://code4sabae.github.io/js/ClientSync.js";
+
+const waitClick = async (c) => {
+  return new Promise(resolve => {
+    const f = () => {
+      c.removeEventListener("click", f);
+      resolve();
+    };
+    c.addEventListener("click", f);
+  });
+};
+
+window.onload = async () => {
+  const ws = await new ClientSync().connect("/ws/");
+  let cnt = 0;
+  for (;;) {
+    await waitClick(btn);
+    cnt++;
+    ws.send({ ab: cnt });
+    const res = await ws.get();
+    console.log(res);
+    divn.textContent = res.n;
+  }
+};
+</script>
+<body>
+  <button id="btn">click me!</button><br>
+  <div id="divn"></div>
+</html>
