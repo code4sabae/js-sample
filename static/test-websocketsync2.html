@@ -8,7 +8,7 @@ window.onload = async () => {
   let cnt = 0;
   for (;;) {
     await waitClick(btn);
-    ws.send({ ab: cnt++ });
+    ws.send({ ab: ++cnt });
     const res = await ws.get();
     console.log(res);
     divn.textContent = res.n;
